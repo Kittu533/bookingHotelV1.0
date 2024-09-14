@@ -2,15 +2,17 @@
 
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\HotelBookingController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\HotelRoomController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontController::class, 'index'])->name('front.index');
+Route::get('/hotels', [FrontController::class, 'hotels'])->name('front.hotels');
+Route::post('/hotels/search/', [FrontController::class, 'search_hotels'])->name('front.search.hotels');
+Route::get('/hotels/list/{keyword}', [FrontController::class, 'list_hotels'])->name('front.hotels.list');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -44,12 +46,13 @@ Route::middleware('auth')->group(function () {
             Route::get('add/room/{hotel:slug}', [HotelRoomController::class, 'create'])->name('hotel_rooms.create');
             Route::post('add/room/{hotel:slug}/store', [HotelRoomController::class, 'store'])->name('hotel_rooms.store');
             Route::get('hotel/{hotel:slug}/room/{hotel_room}', [HotelRoomController::class, 'edit'])->name('hotel_rooms.edit');
-            Route::put('hotel/{hotel:slug}/update', [HotelRoomController::class, 'update'])->name('hotel_rooms.update');
+            Route::put('hotel/{hotel:slug}/update/{hotel_room}', [HotelRoomController::class, 'update'])->name('hotel_rooms.update');
+            Route::put('hotel/{hotel:slug}/room/{hotel_room}', [HotelRoomController::class, 'update'])->name('hotel_rooms.update');
             Route::delete('hotel/{hotel:slug}/delete/{hotel_room}', [HotelRoomController::class, 'destroy'])->name('hotel_rooms.destroy');
         });
 
         Route::middleware('can:manage hotel bookings')->group(function () {
-            Route::resource('hotel_bookings',HotelBookingController::class);
+            Route::resource('hotel_bookings', HotelBookingController::class);
         });
     });
 });

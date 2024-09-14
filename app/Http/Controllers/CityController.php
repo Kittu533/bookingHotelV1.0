@@ -16,7 +16,7 @@ class CityController extends Controller
     public function index()
     {
         $cities = City::orderByDesc('id')->paginate(10);
-        return view ('admin.cities.index',compact('cities'));
+        return view('admin.cities.index', compact('cities'));
     }
 
     /**
@@ -24,19 +24,19 @@ class CityController extends Controller
      */
     public function create()
     {
-        return view ('admin.cities.create');
+        return view('admin.cities.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store( StoreCityRequest $request)
+    public function store(StoreCityRequest $request)
     {
         // 1 validasi data
         // 2 mulai insert  ke pada tabel di database
         // 3 megembalikan pengguna ke halaman sebelumnya (index city)
 
-        DB::transaction(function() use ($request){
+        DB::transaction(function () use ($request) {
             $validated = $request->validated();
             $validated['slug'] = Str::slug($validated['name']);
             $newData = City::create($validated);
@@ -58,15 +58,21 @@ class CityController extends Controller
      */
     public function edit(City $city)
     {
-        //
+        return view('admin.cities.edit',compact('city'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, City $city)
+    public function update(StoreCityRequest $request, City $city)
     {
-        //
+        DB::transaction(function () use ($request,$city) {
+            $validated = $request->validated();
+            $validated['slug'] = Str::slug($validated['name']);
+            $city->update($validated);
+        });
+
+        return redirect()->route('admin.cities.index' );
     }
 
     /**
@@ -74,6 +80,10 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        //
+        DB::transaction((function () use ($city) {
+            $city->delete();
+        }));
+
+        return redirect()->route('admin.cities.index');
     }
 }

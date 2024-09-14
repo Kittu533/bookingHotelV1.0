@@ -23,13 +23,13 @@ class UpdateHotelRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'link_gmaps' => ['required', 'string', 'max:255'],
+            'link_gmaps' => ['required', 'string', 'max:65255'],
             'address' => ['required', 'string', 'max:255'],
-            'thumbnail' => ['sometimes', 'image', 'mimes:png.jpg.jpeg'],
+            'thumbnail' => ['sometimes', 'image', 'mimes:png,jpg,jpeg'],
             'city_id' => ['required', 'integer'],
             'country_id' => ['required', 'integer'],
             'star_level' => ['required', 'integer'],
-            'photos.*' => ['required', 'image', 'mimes:png,jpg.jpeg']
+            'photos.*' => ['sometimes', 'image', 'mimes:png,jpg,jpeg']
         ];
     }
 }

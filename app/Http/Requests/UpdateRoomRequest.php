@@ -6,26 +6,18 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRoomRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'name'=> ['required','string','max:255'],
-            'photo'=> ['sometimes','image','mines:png,jpg,jpeg'],
-            'total_people' => ['required','integer'],
-            'price' => ['required','integer']
+            'name' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5048',
+            'price' => 'required|numeric|min:0',
+            'total_people' => 'required|integer|min:1',
         ];
     }
 }

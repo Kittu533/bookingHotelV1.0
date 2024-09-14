@@ -11,22 +11,23 @@
 
                 <div class="item-card flex flex-row justify-between items-center">
                     <div class="flex flex-row items-center gap-x-3">
-                        <img src=" " alt="" class="rounded-2xl object-cover w-[120px] h-[90px]">
+                        <img src="{{Storage::url($hotel->thumbnail)}}" alt="" class="rounded-2xl object-cover w-[120px] h-[90px]">
+
                         <div class="flex flex-col">
                             <h3 class="text-indigo-950 text-xl font-bold">
-                                asdsad
+                                {{ $hotel->name }}
                             </h3>
-                        <p class="text-slate-500 text-sm">
-                           asdsad, asdasd
-                        </p>
+                            <p class="text-slate-500 text-sm">
+                                {{ $hotel->City->name }}, {{ $hotel->Country->name }}
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <hr class="my-5"> 
+                <hr class="my-5">
 
-                <form method="POST" action=" " enctype="multipart/form-data"> 
-
+                <form method="POST" action="{{ route('admin.hotel_rooms.store',$hotel->slug) }}" enctype="multipart/form-data">
+                    @csrf
                     <div>
                         <x-input-label for="name" :value="__('Name')" />
                         <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
@@ -52,7 +53,7 @@
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
-            
+
                         <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
                             Add New Hotel Room
                         </button>
