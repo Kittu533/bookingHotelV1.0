@@ -7,7 +7,14 @@
         <nav class="bg-white p-[10px_16px] h-fit w-full flex items-center justify-between rounded-full shadow-[0_8px_30px_0_#0A093212] z-10 mt-[60px]">
           <a href="{{ route('login') }}">
             <div class="w-[54px] h-[54px] flex shrink-0 overflow-hidden rounded-full items-center justify-center">
+
+            @guest
               <img src="assets/images/icons/user.svg" class="w-full h-full object-cover" alt="icon">
+            @endguest
+
+            @auth
+              <img src="{{ Storage::url(Auth::user()->avatar) }}" class="w-full h-full object-cover" alt="icon">
+            @endauth
             </div>
           </a>
           <div class="flex flex-col gap-[2px] text-center">
@@ -154,7 +161,7 @@
             <p class="text-xs leading-[18px] font-medium text-[#757C98]">Search</p>
           </div>
         </a>
-        <a href="">
+        <a href="{{ route('dashboard.my-bookings') }}">
           <div class="flex flex-col gap-1 items-center">
             <div class="w-6 h-6 flex shrink-0">
               <img src="assets/images/icons/activity-nonactive.svg" alt="icon">
@@ -162,7 +169,7 @@
             <p class="text-xs leading-[18px] font-medium text-[#757C98]">Activity</p>
           </div>
         </a>
-        <a href="">
+        <a href="{{ route('dashboard') }}">
           <div class="flex flex-col gap-1 items-center">
             <div class="w-6 h-6 flex shrink-0">
               <img src="assets/images/icons/settings-nonactive.svg" alt="icon">

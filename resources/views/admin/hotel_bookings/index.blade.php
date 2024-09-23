@@ -28,7 +28,7 @@
                     <div  class="hidden md:flex flex-col">
                         <p class="text-slate-500 text-sm">Name</p>
                         <h3 class="text-indigo-950 text-xl font-bold">
-                            {{ $booking->name }}
+                            {{ $booking->customer->name }}
                         </h3>
                     </div>
                     <div  class="hidden md:flex flex-col">
@@ -40,7 +40,7 @@
                     <div  class="hidden md:flex flex-col">
                         <p class="text-slate-500 text-sm">Price</p>
                         <h3 class="text-indigo-950 text-xl font-bold">
-                            Rp {{ number_format($booking->total_amount,0,',','.') }}/night
+                            Rp {{ number_format($booking->total_amounts,0,',','.') }}
                         </h3>
                     </div>
                     <div class="hidden md:flex flex-row items-center gap-x-3">

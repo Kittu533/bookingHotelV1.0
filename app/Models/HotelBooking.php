@@ -15,13 +15,17 @@ class HotelBooking extends Model
         'checkin_at',
         'checkout_at',
         'total_days',
-        'room_id',
+        'hotel_room_id',
         'total_amounts',
         'user_id',
         'hotel_id',
         'is_paid'
     ];
 
+    protected $casts = [
+        'checkin_at' => 'date',
+        'checkout_at' => 'date',
+    ];
     public function customer(){
         return $this->belongsTo(User::class,'user_id');
     }
@@ -29,6 +33,6 @@ class HotelBooking extends Model
         return $this->belongsTo(Hotel::class,'hotel_id');
     }
     public function room(){
-        return $this->belongsTo(HotelRoom::class,'room_id');
+        return $this->belongsTo(HotelRoom::class,'hotel_room_id');
     }
 }

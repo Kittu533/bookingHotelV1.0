@@ -11,7 +11,7 @@ class StoreHotelBookingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,8 @@ class StoreHotelBookingRequest extends FormRequest
     {
         return [
             //
+            'proof' => ['nullable', 'image', 'mimes:png,jpg,jpeg']
+
         ];
     }
 }

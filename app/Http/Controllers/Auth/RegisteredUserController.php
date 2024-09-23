@@ -29,17 +29,14 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'avatar' => ['required', 'image', 'mimes:png,jpg,jpeg'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
-
+        // Cek apakah file avatar diupload
         if ($request->hasFile('avatar')) {
-           $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        } else {
+            return redirect()->back()->withErrors(['avatar' => 'Avatar is required.']);
         }
 
+        // Buat pengguna baru
         $user = User::create([
             'name' => $request->name,
             'avatar' => $avatarPath,
@@ -47,12 +44,17 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        // Beri role kepada user baru
         $user->assignRole('customer');
 
+        // Trigger event 'Registered'
         event(new Registered($user));
 
+        // Login user yang baru dibuat
         Auth::login($user);
 
+        // Debug untuk memastikan user berhasil dibuat
+        // Redirect ke dashboard setelah berhasil login
         return redirect(route('dashboard', absolute: false));
     }
 }

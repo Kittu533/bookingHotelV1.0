@@ -4,189 +4,89 @@
     <div class="w-full h-[165px] absolute top-0 bg-[linear-gradient(244.6deg,_#7545FB_14.17%,_#2A3FCC_92.43%)]">
     </div>
     <div class="relative z-10 px-[18px] flex flex-col gap-6 mt-[60px]">
-      <div class="top-menu flex justify-between items-center">
-        <a href="search.html" class="">
-          <div class="w-[42px] h-[42px] flex shrink-0">
-            <img src="assets/images/icons/back.svg" alt="icon">
-          </div>
-        </a>
-        <p class="font-semibold text-lg leading-[28px] text-white text-center">Singapore</p>
-        <div class="dummy-spacer w-[42px] h-[42px] flex shrink-0">
+        <div class="top-menu flex justify-between items-center">
+            <a href="{{route('front.hotels')}}" class="">
+                <div class="w-[42px] h-[42px] flex shrink-0">
+                    <img src="{{asset('assets/images/icons/back.svg')}}" alt="icon">
+                </div>
+            </a>
+            <p class="font-semibold text-lg leading-[28px] text-white text-center">{{ $keyword }}</p>
+            <div class="dummy-spacer w-[42px] h-[42px] flex shrink-0">
+            </div>
         </div>
-      </div>
-      <div id="result" class="result-card-container flex flex-col gap-[18px]">
-        <a href="hotel-details.html">
-          <div class="card-result bg-white rounded-xl overflow-hidden flex flex-col">
-            <div class="thumbnail-container w-full aspect-[357/160] overflow-hidden flex shrink-0">
-              <img src="assets/images/thumbnails/thumbnail-result-1.png" class="object-cover w-full h-full" alt="thumbnail">
-            </div>
-            <div class="content-container flex flex-col p-4 gap-6">
-              <div class="details-container flex flex-col gap-[6px]">
-                <div class="ratings-container flex items-center gap-[2px]">
-                  <div class="star-container flex items-center">
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
+        <div id="result" class="result-card-container flex flex-col gap-[18px]">
+            <!-- Result Card -->
+            @forelse ($hotels as $hotel)
+            <a href="{{ route('front.hotels.details',$hotel) }}">
+                <div class="card-result bg-white rounded-xl overflow-hidden flex flex-col">
+                    <div class="thumbnail-container w-full aspect-[357/160] overflow-hidden flex shrink-0">
+                        <img src="{{ Storage::url($hotel->thumbnail) }}" class="object-cover w-full h-full" alt="thumbnail">
                     </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
+                    <div class="content-container flex flex-col p-4 gap-6">
+                        <div class="details-container flex flex-col gap-[6px]">
+                            <div class="ratings-container flex items-center gap-[2px]">
+                                <div class="star-container flex items-center">
+                                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
+                                        <img src="{{asset('assets/images/icons/Star.svg')}}" alt="star">
+                                    </div>
+                                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
+                                        <img src="{{asset('assets/images/icons/Star.svg')}}" alt="star">
+                                    </div>
+                                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
+                                        <img src="{{asset('assets/images/icons/Star.svg')}}" alt="star">
+                                    </div>
+                                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
+                                        <img src="{{asset('assets/images/icons/Star.svg')}}" alt="star">
+                                    </div>
+                                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
+                                        <img src="{{asset('assets/images/icons/Star-half.svg')}}" alt="star">
+                                    </div>
+                                </div>
+                                <p class="rating font-semibold text-sm leading-[21px]">4.5/5.0</p>
+                                <p class="reviewers font-medium text-sm leading-[21px] text-[#757C98]">(2209 Reviews)</p>
+                            </div>
+                            <p class="hotel-name font-semibold">{{ $hotel->name }}</p>
+                            <div class="badge flex items-center gap-3">
+                                <div class="flex items-center gap-1">
+                                    <div class="flex shrink-0">
+                                        <img src="{{asset('assets/images/icons/location-grey.svg')}}" alt="icon">
+                                    </div>
+                                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">{{ $hotel->city->name }}</p>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <div class="flex shrink-0">
+                                        <img src="{{asset('assets/images/icons/star-outline-grey.svg')}}" alt="icon">
+                                    </div>
+                                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">{{ $hotel->star_level }}</p>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <div class="flex shrink-0">
+                                        <img src="{{asset('assets/images/icons/wifi-grey.svg')}}" alt="icon">
+                                    </div>
+                                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">Free Wifi</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="total-price flex gap-[2px] items-center">
+                            <p class="text-[#54A917] font-semibold text-lg leading-[27px]">Rp {{ number_format($hotel->getLowestRoomPrice(),0,',','.') }}</p>
+                            <p class="text-[#757C98] font-semibold text-xs leading-[18px]">/night</p>
+                        </div>
                     </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star-half.svg" alt="star">
-                    </div>
-                  </div>
-                  <p class="rating font-semibold text-sm leading-[21px]">4.5/5.0</p>
-                  <p class="reviewers font-medium text-sm leading-[21px] text-[#757C98]">(2209 Reviews)</p>
                 </div>
-                <p class="hotel-name font-semibold">Citrine Crest Hotel</p>
-                <div class="badge flex items-center gap-3">
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/location-grey.svg" alt="icon">
+            </a>
+            @empty
+            <div id="result" class="result-card-container flex flex-col gap-[18px]">
+                <div class="empty-result h-[321px] bg-white rounded-xl overflow-hidden flex flex-col justify-center items-center gap-3">
+                    <div class="flex shrink-0 w-9 h-9">
+                        <img src="{{asset('assets/images/icons/emoticon.png')}}" alt="icon">
                     </div>
-                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">Pecinan</p>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/star-outline-grey.svg" alt="icon">
-                    </div>
-                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">4 Star</p>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/wifi-grey.svg" alt="icon">
-                    </div>
-                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">Free Wifi</p>
-                  </div>
+                    <p class="font-medium text-[#757C98] text-center">Sadly, it looks like no hotels are<br>available around here.</p>
                 </div>
-              </div>
-              <div class="total-price flex gap-[2px] items-center">
-                <p class="text-[#54A917] font-semibold text-lg leading-[27px]">Rp1.310.000</p>
-                <p class="text-[#757C98] font-semibold text-xs leading-[18px]">/night</p>
-              </div>
             </div>
-          </div>
-        </a>
-        <a href="hotel-details.html">
-          <div class="card-result bg-white rounded-xl overflow-hidden flex flex-col">
-            <div class="thumbnail-container w-full aspect-[357/160] overflow-hidden flex shrink-0">
-              <img src="assets/images/thumbnails/thumbnail-result-2.png" class="object-cover w-full h-full" alt="thumbnail">
-            </div>
-            <div class="content-container flex flex-col p-4 gap-6">
-              <div class="details-container flex flex-col gap-[6px]">
-                <div class="ratings-container flex items-center gap-[2px]">
-                  <div class="star-container flex items-center">
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star-half.svg" alt="star">
-                    </div>
-                  </div>
-                  <p class="rating font-semibold text-sm leading-[21px]">4.9/5.0</p>
-                  <p class="reviewers font-medium text-sm leading-[21px] text-[#757C98]">(2209 Reviews)</p>
-                </div>
-                <p class="hotel-name font-semibold">Celestial Crest Hotel</p>
-                <div class="badge flex items-center gap-3">
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/location-grey.svg" alt="icon">
-                    </div>
-                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">Emerald Hill</p>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/star-outline-grey.svg" alt="icon">
-                    </div>
-                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">5 Star</p>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/wifi-grey.svg" alt="icon">
-                    </div>
-                    <p class="font-medium text-sm leading-[21px] text-[#757C98]">Free Wifi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="total-price flex gap-[2px] items-center">
-                <p class="text-[#54A917] font-semibold text-lg leading-[27px]">Rp1.200.000</p>
-                <p class="text-[#757C98] font-semibold text-xs leading-[18px]">/night</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="hotel-details.html">
-          <div class="card-result bg-white rounded-xl overflow-hidden flex flex-col">
-            <div class="thumbnail-container w-full aspect-[357/160] overflow-hidden flex shrink-0">
-              <img src="assets/images/thumbnails/thumbnail-result-3.png" class="object-cover w-full h-full" alt="thumbnail">
-            </div>
-            <div class="content-container flex flex-col p-4 gap-6">
-              <div class="details-container flex flex-col gap-[6px]">
-                <div class="ratings-container flex items-center gap-[2px]">
-                  <div class="star-container flex items-center">
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star.svg" alt="star">
-                    </div>
-                    <div class="flex shrink-0 w-[18px] h-[18px] p-[2px]">
-                      <img src="assets/images/icons/Star-half.svg" alt="star">
-                    </div>
-                  </div>
-                  <p class="rating font-semibold text-sm leading-[21px]">4.8/5.0</p>
-                  <p class="reviewers font-medium text-sm leading-[21px] text-[#757C98]">(2209 Reviews)</p>
-                </div>
-                <p class="hotel-name font-semibold">Sapphire Shores Resort</p>
-                <div class="badge flex items-center gap-3">
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/location-grey.svg" alt="icon">
-                    </div>
-                    <p class="text-[#757C98]">Katong District</p>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/star-outline-grey.svg" alt="icon">
-                    </div>
-                    <p class="text-[#757C98]">5 Star</p>
-                  </div>
-                  <div class="flex items-center gap-1">
-                    <div class="flex shrink-0">
-                      <img src="assets/images/icons/wifi-grey.svg" alt="icon">
-                    </div>
-                    <p class="text-[#757C98]">Free Wifi</p>
-                  </div>
-                </div>
-              </div>
-              <div class="total-price flex gap-[2px] items-center">
-                <p class="text-[#54A917] font-semibold text-lg leading-[27px]">Rp406.400</p>
-                <p class="text-[#757C98] font-semibold text-xs leading-[18px]">/night</p>
-              </div>
-            </div>
-          </div>
-        </a>
-      </div>
+            @endforelse
+
+            <!-- Result Card -->
+        </div>
     </div>
-  </section>
+</section>
 @endsection
